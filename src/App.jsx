@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import EditProduct from './Pages/EditProduct'
 import ProductDetails from './Pages/ProductDetails'
+import AllOrder from "./Pages/AllOrder"
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -40,6 +41,7 @@ const App = () => {
                   <Route path='/list' element={<ListProduct token={token}/>} />
           <Route path="/edit/:id" element={<EditProduct token={token} />} />
 <Route path='/productDetails/:id' element={<ProductDetails token={token}/>}/>
+<Route path='/order' element={<AllOrder token={token}/>}/>
                 </Routes>
               </div>
             </div>
