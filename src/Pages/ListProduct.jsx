@@ -78,7 +78,7 @@ const ListProduct = ({ token }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 md:mt-28 mt-24">
         {/* Left side: List Products */}
         <div className="flex items-center gap-2 text-[#5b4f47]">
           <FaList className="text-xl" />
@@ -88,7 +88,7 @@ const ListProduct = ({ token }) => {
         {/* Right side: Add Product */}
         <Link
           to="/add"
-          className="px-4 py-2 bg-[#5b4f47] text-white rounded transition"
+          className="px-4 py-2 bg-[#5b4f47] text-white  transition"
         >
           Add New Product
         </Link>
