@@ -9,6 +9,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaBars,
+  FaCircle ,
   FaTimes,
   FaSearch,
 } from "react-icons/fa";
@@ -28,10 +29,19 @@ const menuItems = [
       { title: "List Products", icon: <FaList />, href: "/list" },
     ],
   },
+ 
   {
     title: "Orders",
-    icon: <FaShoppingCart />,
-    href: "/order",
+    icon:<FaShoppingCart />,
+    dropdown: true,
+    children: [
+       { title: "All Orders", icon: <FaCircle className="h-2"/>, href: "/order" },
+          { title: "placed Order", icon: <FaCircle className="h-2"/>, href: "/placed-order" },
+      { title: "Packing Orders", icon: <FaCircle className="h-2"/>, href: "/packing-order" },
+      { title: "Shipped Orders", icon: <FaCircle className="h-2" />, href: "/shipped-order" },
+      { title: "Out of Delivery", icon: <FaCircle className="h-2" />, href: "/out-of-delivery-order" },
+        { title: "Delivered", icon:<FaCircle className="h-2" />, href: "/delivered-order" },
+    ],
   },
 ];
 
@@ -58,7 +68,7 @@ const SideBar = () => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-[#5b4f47] text-white p-2 rounded"
+        className="md:hidden fixed top-6 right-6 z-50 bg-[#5b4f47] text-white p-2 "
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FaTimes /> : <FaBars />}
@@ -66,13 +76,14 @@ const SideBar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full md:h-screen 
-        w-[70%] md:w-[18%] bg-[#f8f7f4] border-r shadow-md 
-        transform transition-transform duration-300 z-40 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        className={`fixed md:static top-20 left-0 w-[70%] md:w-[18%] 
+      bg-[#f8f7f4] border-r shadow-md 
+      transform transition-transform duration-300 z-40 
+      ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+      min-h-screen`}
       >
         {/* Search Field */}
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-gray-200 md:mt-28">
           <div className="relative">
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
@@ -103,7 +114,7 @@ const SideBar = () => {
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-lg">{item.icon}</span>
-                        <p className="hidden md:block">{item.title}</p>
+                        <p className="">{item.title}</p>
                       </div>
                       <span className="text-sm">
                         {openDropdown === index ? <FaChevronUp /> : <FaChevronDown />}
@@ -150,7 +161,7 @@ const SideBar = () => {
                     }
                   >
                     <span className="text-lg">{item.icon}</span>
-                    <p className="hidden md:block">{item.title}</p>
+                    <p className="">{item.title}</p>
                   </NavLink>
                 )}
               </div>
