@@ -83,24 +83,24 @@ const AddProduct = ({ token }) => {
 
   return (
     <>
-   <div className="flex items-center justify-between mb-6">
+   <div className="flex md:items-center   justify-between mb-6 md:mt-28 mt-24">
       {/* Left side: Add Product */}
       <div className="flex items-center gap-2 text-[#5b4f47]">
         <FaPlus className="text-xl" />
-        <h1 className="font-semibold text-xl">Add Product</h1>
+        <h1 className="font-semibold md:text-xl text-md">Add Product</h1>
       </div>
 
       {/* Right side: View All Products */}
       <Link
         to="/list"
-        className="px-4 py-2 bg-[#5b4f47] text-white rounded  transition"
+        className="md:px-4 md:py-2 px-2 py-2 bg-[#5b4f47] text-white  transition"
       >
         View All Products
       </Link>
     </div>
     <form
       onSubmit={OnSubmitHandler}
-      className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto p-6 bg-white shadow-md rounded"
+      className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full md:max-w-6xl mx-auto p-6 bg-white shadow-md rounded"
     >
       {/* LEFT SIDE */}
       
@@ -274,7 +274,7 @@ const AddProduct = ({ token }) => {
        <div className="flex justify-start">
           <button
             type="submit"
-            className="w-40 py-3 bg-[#5b4f47] text-white rounded transition"
+            className="w-40 py-3 bg-[#5b4f47] text-white  transition"
           >
             Add Product
           </button>
