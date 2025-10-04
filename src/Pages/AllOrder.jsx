@@ -1,56 +1,73 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { backendUrl } from '../App';
-import { toast } from 'react-toastify';
-import { assets } from '../assets/assets';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { backendUrl } from "../App";
+import { toast } from "react-toastify";
+import { assets } from "../assets/assets";
+import { useLocation } from "react-router-dom";
 
-const Orders = ({ token }) => {
+const AllOrder = ({ token }) => {
   const [orders, setOrders] = useState([]);
+  const location = useLocation(); // Get current URL path
 
-const fetchAllOrders = async () => {
-  try {
-    const response = await axios.get(backendUrl + "/order/get");
-    console.log(response)
-    if (response.data.success) {
-      setOrders(response.data.orders);
-    } else {
-      toast.error(response.data.message);
+  // Convert path to status string
+  const status = location.pathname.replace("/", ""); // e.g., "placed-order"
+
+  // Fetch all orders
+  const fetchAllOrders = async () => {
+    try {
+      const response = await axios.get(backendUrl + "/order/get");
+      if (response.data.success) {
+        setOrders(response.data.orders);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-  } catch (error) {
-    toast.error(error.message);
-  }
-};
+  };
 
-
-
-const statusHandler = async (event, orderId) => {
-  try {
-    const response = await axios.post(
-      backendUrl + "/order/update-status",  
-      { orderId, status: event.target.value },
-      { headers: { token } }
-    );
-    if (response.data.success) {
-      await fetchAllOrders();
-      toast.success("Status updated");
+  // Update order status
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await axios.post(
+        backendUrl + "/order/update-status",
+        { orderId, status: event.target.value },
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        await fetchAllOrders();
+        toast.success("Status updated");
+      }
+    } catch (error) {
+      toast.error("Failed to update status");
     }
-  } catch (error) {
-    console.log(error);
-    toast.error("Failed to update status");
-  }
-};
+  };
 
   useEffect(() => {
     fetchAllOrders();
   }, [token]);
 
+  // Filter orders based on current URL path
+  const filteredOrders = orders.filter((order) => {
+    if (!status || status === "order") return true; // "All Orders"
+    if (status === "placed-order") return order.status === "Order Placed";
+    if (status === "packing-order") return order.status === "Packing";
+    if (status === "shipped-order") return order.status === "Shipped";
+    if (status === "out-of-delivery-order") return order.status === "Out for delivery";
+    if (status === "delivered-order") return order.status === "Delivered";
+    return true;
+  });
+
   return (
-    <div>
-      <h3 className="text-lg font-semibold my-4">Order Page</h3>
+    <div className="md:mt-28 mt-24">
+      <h3 className="text-lg font-semibold my-4">
+        {status ? status.replace(/-/g, " ").toUpperCase() : "All Orders"}
+      </h3>
+
       <div>
-        {orders.map((order, index) => (
+        {filteredOrders.map((order, index) => (
           <div
-            className="grid grid-cols-1 sm:grid-cols-[1.5fr_2fr_1.5fr_1fr_1fr] gap-4 border-2 border-gray-200 p-5 md:p-6 my-4 text-xs sm:text-sm text-gray-700 items-start"
+            className="grid grid-cols-1 w-80 md:w-auto sm:grid-cols-[1.5fr_2fr_1.5fr_1fr_1fr] gap-4 border-2 border-gray-200 p-5 md:p-6 my-4 text-xs sm:text-sm text-gray-700 items-start"
             key={index}
           >
             {/* Column 1: Icon + Name + Address */}
@@ -62,10 +79,9 @@ const statusHandler = async (event, orderId) => {
                 </p>
                 <p>{order.address?.street}</p>
                 <p>
-                  {order.address?.city}, {order.address?.state},{' '}
-                  {order.address?.country}, {order.address?.zipcode}
+                  {order.address?.city}, {order.address?.state}, {order.address?.country}, {order.address?.zipcode}
                 </p>
-                <p className="text-gray-500 text-sm"> {order.address?.phone}</p>
+                <p className="text-gray-500 text-sm">{order.address?.phone}</p>
               </div>
             </div>
 
@@ -83,7 +99,7 @@ const statusHandler = async (event, orderId) => {
             <div>
               <p className="font-semibold mb-1">Payment</p>
               <p>Method: {order.paymentMethod}</p>
-              <p>Status: {order.payment ? ' Done' : ' Pending'}</p>
+              <p>Status: {order.payment ? " Done" : " Pending"}</p>
               <p>Date: {new Date(order.date).toLocaleDateString()}</p>
             </div>
 
@@ -96,9 +112,11 @@ const statusHandler = async (event, orderId) => {
             {/* Column 5: Status Select */}
             <div>
               <p className="font-semibold mb-1">Status</p>
-              <select value={order.status} 
-              onChange={(event)=>statusHandler(event,order._id)}
-              className="border px-2 py-1 rounded">
+              <select
+                value={order.status}
+                onChange={(event) => statusHandler(event, order._id)}
+                className="border px-2 py-1 rounded"
+              >
                 <option value="Order Placed">Order Placed</option>
                 <option value="Packing">Packing</option>
                 <option value="Shipped">Shipped</option>
@@ -113,4 +131,4 @@ const statusHandler = async (event, orderId) => {
   );
 };
 
-export default Orders;
+export default AllOrder;
