@@ -101,7 +101,7 @@ const EditProduct = ({ token }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 md:mt-28 mt-24">
         <div className="flex items-center gap-2 text-[#5b4f47]">
           <FaPlus className="text-xl" />
           <h1 className="font-semibold text-xl">Edit Product</h1>
@@ -109,7 +109,7 @@ const EditProduct = ({ token }) => {
 
         <Link
           to="/list"
-          className="px-4 py-2 bg-[#5b4f47] text-white rounded  transition"
+          className="px-4 py-2 bg-[#5b4f47] text-white   transition"
         >
           View All Products
         </Link>
@@ -280,7 +280,7 @@ const EditProduct = ({ token }) => {
        <div className="flex justify-start col-span-2 gap-4">
   <button
     type="submit"
-    className="w-40 py-3 bg-[#5b4f47] text-white rounded transition"
+    className="w-40 py-3 bg-[#5b4f47] text-white  transition"
   >
     Update Product
   </button>
@@ -288,7 +288,7 @@ const EditProduct = ({ token }) => {
   <button
     type="button"
     onClick={() => navigate("/list")}
-    className="w-40 py-3 bg-gray-300 text-black rounded transition"
+    className="w-40 py-3 bg-gray-300 text-black  transition"
   >
     Cancel
   </button>
