@@ -37,7 +37,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-5xl mx-auto p-6 bg-white shadow-md md:mt-28 mt-24">
       {/* Header */}
       <h2 className="text-2xl font-bold text-[#5b4f47] mb-6">
         Product Details
@@ -108,13 +108,13 @@ const ProductDetails = () => {
        
         <button
           onClick={() => navigate(`/edit/${product._id}`)}
-          className="px-6 py-2 bg-[#5b4f47] text-white rounded hover:opacity-90 transition"
+          className="px-6 py-2 bg-[#5b4f47] text-white  hover:opacity-90 transition"
         >
           Edit Product
         </button>
          <Link
           to="/list"
-          className="px-6 py-2 bg-gray-300 text-gray-800 rounded  transition"
+          className="px-6 py-2 bg-gray-300 text-gray-800   transition"
         >
           Back to Products
         </Link>
